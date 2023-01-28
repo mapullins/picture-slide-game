@@ -21,12 +21,16 @@ def select_picture(path,
         valid_ending = ['png', 'jpeg', 'jpg']
         pics = [fname for fname in os.listdir(path) if fname.split('.')[-1] in valid_ending]
         pic_file = path + '/' + pics[np.random.randint(len(pics))]
-        return np.array(Image.open(pic_file))
+        pic = Image.open(pic_file)
+        pic = pic.resize((1280, 800))
+        return np.array(pic)
 
     else:
         try:
             pic_file = path + '/' + optional_name
-            return np.array(Image.open(pic_file))
+            pic = Image.open(pic_file)
+            pic = pic.resize((1280, 800))
+            return np.array(pic)
         except:
             print('No File Given or Found')
             return None
@@ -37,8 +41,8 @@ def picture_slice(picture_array,
 
     """Cuts the array picture_array into pieces with sides many pieces on each side. More functionality to be added once basic case is tested"""
 
-    WIDTH = int(picture_array.shape[0] / sides)
-    LENGTH = int(picture_array.shape[1] / sides)
+    WIDTH = int(picture_array.shape[1] / sides)
+    LENGTH = int(picture_array.shape[0] / sides)
 
     piece_list = []
     for ii in range(sides):
@@ -252,21 +256,16 @@ pygame.init()
 
 # Run all the functions
 picture = select_picture('test_photos/', optional_name='test_photo_1.jpg')
+print(picture.shape)
 piece_list = picture_slice(picture, sides = 4)
 piece_list = create_borders(piece_list)
 save_array(piece_list)
 piece_list = load_pieces(16)
 
-# Have the computer mix them up
-#piece_list, blank_position = computer_player(piece_list, 4, blank_position)
-#print(blank_position)
 
 while True:
 
     displaysurface.fill([255,255,255])
-    #for obj in piece_list:
-    #    displaysurface.blit(obj.image, obj.rect)
-
 
     
     for piece in piece_list:
@@ -278,7 +277,6 @@ while True:
 
 
     if tick < 100:
-        #time.sleep(1)
         piece_list, blank_position = computer_player(piece_list, 4, blank_position)
         tick += 1
 
