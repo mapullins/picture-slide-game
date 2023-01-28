@@ -1,71 +1,8 @@
-import time
 import numpy as np
-import pandas as pd
-import matplotlib as mpl
-import matplotlib.pyplot as plt
 import os
-import pygame
 from PIL import Image
 from pygame.locals import *
-import sys
 import random
-
-
-class Picture_Piece(pygame.sprite.Sprite):
-    
-    def __init__(self, x, y, position, sides):
-        super().__init__()
-        self.image = pygame.image.load(f'tmp_{position}.png')
-        self.rect = self.image.get_rect(center = (x,y))
-        self.width = self.rect.width
-        self.length = self.rect.height
-        self.position = position
-        self.sides = sides
-        self.true_position = position
-
-    def render(self):
-        displaysurface.blit(self.image, (self.rect.x, self.rect.y)) 
-
-    def check_blank(self, direction, sides):
-        
-        if (self.position - self.sides == blank_position) and (direction == 'up'):
-            return True
-        
-        
-        elif (self.position + self.sides == blank_position) and (direction == 'down'):
-            return True
-
-        elif (self.position + 1 == blank_position) and (direction == 'right') and (self.position % sides != 0):
-            return True
-        
-        elif (self.position - 1 == blank_position) and (direction == 'left') and (self.position % sides != 1):
-            return True        
-
-        else:
-            return False
-
-    
-    def move_picture(self, direction):
-        
-        if direction == 'up':
-            new_pos = (self.rect.centerx, self.rect.centery - self.length)
-            self.position = self.position - self.sides
-        elif direction == 'down':
-            new_pos = (self.rect.centerx, self.rect.centery + self.length)
-            self.position = self.position + self.sides
-        elif direction == 'right':
-            new_pos = (self.rect.centerx + self.width, self.rect.centery)
-            self.position = self.position + 1
-        elif direction == 'left':
-            new_pos = (self.rect.centerx - self.width, self.rect.centery)  
-            self.position = self.position - 1 
-        self.rect.center = new_pos     
-
-
-    def correct_place(self):
-        return self.position == self.true_position
-
-
 
 
 def select_picture(path,
@@ -159,36 +96,3 @@ def save_array(picture_list):
     for pic in picture_list:
         Image.fromarray(pic).save(f'tmp_{count}.png')
         count += 1
-
-def load_pieces(num):
-
-    """Prepare the pieces as picture_piece objects in a list"""
-    num = num - 1
-    # Get the correct dimensions
-    true_num = int(np.sqrt(num + 1))
-    WIDTH = int(1280 / true_num)
-    LENGTH = int(800 / true_num)
-    jj = 0
-    
-    piece_list = []
-    for ii in range(num):
-        ij = ii % true_num
-        tmp_piece = Picture_Piece(int(WIDTH / 2) + ij*WIDTH, int(LENGTH / 2) + jj*LENGTH ,ii+1, true_num)
-        piece_list.append(tmp_piece)
-
-        if (ii+1)%true_num == 0:
-            jj += 1
-
-    return piece_list
-
-def check_pieces(piece_list, direction, sides):
-    """Runs through a list of pieces and returns the index of the one that can be moved. If none, returns special value"""
-
-    truth_list = [piece.check_blank(direction, sides) for piece in piece_list]
-
-    try:
-        ind = truth_list.index(True)
-    except:
-        ind = 'n'
-
-    return ind
