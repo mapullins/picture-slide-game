@@ -11,7 +11,9 @@ import sys
 import random
 
 
-def select_picture(path, random_choice = False, optional_name = None):
+def select_picture(path,
+                   random_choice = False, 
+                   optional_name = None):
 
     """Selects a picture either randomly or with a given name"""
 
@@ -27,15 +29,16 @@ def select_picture(path, random_choice = False, optional_name = None):
             return np.array(Image.open(pic_file))
         except:
             print('No File Given or Found')
-            return ''
+            return None
 
 
-def picture_slice(picture_array, sides = 2):
+def picture_slice(picture_array, 
+                  sides = 2):
 
     """Cuts the array picture_array into pieces with sides many pieces on each side. More functionality to be added once basic case is tested"""
 
-    WIDTH = int(1280 / sides)
-    LENGTH = int(800 / sides)
+    WIDTH = int(picture_array.shape[0] / sides)
+    LENGTH = int(picture_array.shape[1] / sides)
 
     piece_list = []
     for ii in range(sides):
