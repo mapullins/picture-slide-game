@@ -107,3 +107,11 @@ def save_array(picture_list):
     for pic in picture_list:
         Image.fromarray(pic).save(f'.tmp_photos/tmp_{count}.png')
         count += 1
+
+
+def delete_hidden_files():
+
+    hidden_files = os.listdir('.tmp_photos')
+    for fname in hidden_files:
+        PATH = hidden_files + '/' + fname
+        os.remove(PATH)

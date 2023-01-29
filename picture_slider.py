@@ -188,6 +188,7 @@ while True:
         # Exit event
         if event.type == QUIT:
             pygame.quit()
+            utils.delete_hidden_files()
             sys.exit()
 
         # Mouse click events
@@ -232,6 +233,7 @@ while True:
 
             if event.key == pygame.K_SPACE:
                 pygame.quit()
+                utils.delete_hidden_files()
                 sys.exit()
 
 
