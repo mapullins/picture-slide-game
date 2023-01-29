@@ -111,7 +111,17 @@ def save_array(picture_list):
 
 def delete_hidden_files():
 
+    try:
+        python_files = os.listdir('__pycache__')
+        for fname in python_files:
+            PATH = f'__pycache__/{fname}'
+            os.remove(PATH)
+        os.rmdir('__pycache__')
+    except:
+        pass
+
+
     hidden_files = os.listdir('.tmp_photos')
     for fname in hidden_files:
-        PATH = hidden_files + '/' + fname
+        PATH = f'.tmp_photos/{fname}'
         os.remove(PATH)
