@@ -5,11 +5,23 @@ from pygame.locals import *
 import random
 
 
-def select_picture(path,
-                   random_choice = False, 
-                   optional_name = None):
+def select_picture(path:str,
+                   optional_name:str = None,
+                   random_choice:bool = False):
 
-    """Selects a picture either randomly or with a given name"""
+    """
+    Selects and loads a picture.
+    
+    parameters
+    __________
+    path: path to the folder containing pictures
+    optional_name: name of the picture to load
+    random_choice: whether or not to randomly select a photo
+    
+    """
+
+    if not random_choice and optional_name is None:
+        raise ValueError("You must select a filename is not random")
 
     if random_choice:
         valid_ending = ['png', 'jpeg', 'jpg']
