@@ -8,7 +8,7 @@ class Picture_Piece(pygame.sprite.Sprite):
     
     def __init__(self, x, y, position, sides):
         super().__init__()
-        self.image = pygame.image.load(f'tmp_{position}.png')
+        self.image = pygame.image.load(f'.tmp_photos/tmp_{position}.png')
         self.rect = self.image.get_rect(center = (x,y))
         self.width = self.rect.width
         self.length = self.rect.height

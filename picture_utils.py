@@ -38,8 +38,7 @@ def select_picture(path:str,
             pic = pic.resize((1280, 800))
             return np.array(pic)
         except:
-            print('No File Given or Found')
-            return None
+            raise ValueError("No picture found")
 
 
 def picture_slice(picture_array, 
@@ -106,5 +105,5 @@ def save_array(picture_list):
 
     count = 1
     for pic in picture_list:
-        Image.fromarray(pic).save(f'tmp_{count}.png')
+        Image.fromarray(pic).save(f'.tmp_photos/tmp_{count}.png')
         count += 1
